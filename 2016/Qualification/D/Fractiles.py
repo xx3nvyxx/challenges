@@ -49,12 +49,7 @@ def cleanTiles(tiles, S, K):
   return "IMPOSSIBLE"
 
 def bestTile(tiles, K):
-  for i in range(len(tiles[0]):
-    
-    for r in tiles:
-      b = int(r[i])
   g = [sum([int(r[i]) for r in tiles]) for i in range(0,len(tiles[0]))]
-  print(g)
   return g.index(max(g))
 
 if __name__=="__main__":

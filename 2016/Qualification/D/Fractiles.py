@@ -19,38 +19,15 @@ def main():
      print("Case #" + str(i + 1) + ": " + r)
     
 def pickTiles(K, C, S):
-  tiles = list()
-  for i in range(K):
-    tiles.append(addComplexity(2**i, 2**i, K, 1, C))
-  return cleanTiles(tiles, S, K)
-
-def addComplexity(current, original, K, curCplx, C):
-  curString = format(current, "0"+str(K**curCplx)+"b")
-  if curCplx == C:
-    return curString
-  r = 0
-  for i in curString:
-    r <<= K
-    if i == "1":
-      r |= 2**K-1
-    else:
-      r |= original
-  return  addComplexity(r, original, K, curCplx+1, C)
-
-def cleanTiles(tiles, S, K):
-  r = list()
-  while S != 0:
-    i = bestTile(tiles, K)
-    tiles = [x for x in tiles if x[i] != "1"]
-    r.append(str(i+1))
-    if len(tiles) == 0:
-      return " ".join(r)
-    S -= 1
-  return "IMPOSSIBLE"
-
-def bestTile(tiles, K):
-  g = [sum([int(r[i]) for r in tiles]) for i in range(0,len(tiles[0]))]
-  return g.index(max(g))
+  if S < ( (K+1) // 2 ) or ( C == 1 and S < K ):
+    return "IMPOSSIBLE"
+  if C == 1:
+    return ' '.join(map(str,range(1, K+1)))
+  #sequence = iK^(C-1) + (K-i)
+  ret = list()
+  for i in range( (K+1) // 2 ):
+    ret.append( i * (K ** (C-1)) + (K - i))
+  return ' '.join(map(str, ret))
 
 if __name__=="__main__":
   main()

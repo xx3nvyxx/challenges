@@ -38,16 +38,16 @@ def main():
         T = input('What variable should hold the number of test cases? [T]: ') or "T"
         Tmin = input('What is the minimum number of test cases? [1]: ') or "1"
         Tmax = input('What is the maximum number of test cases? [100]: ') or "100"
-        f.write(T + ' = int(input())\n')
-        f.write('if ' + T + ' < ' + Tmin + ' or ' + T + ' > ' + Tmax + ':\n')
-        f.write('    raise RuntimeError("' + T +' is not within the valid range")\n')
-        f.write('for i in range(' + T + '):\n')
+        f.write('    ' + T + ' = int(input())\n')
+        f.write('    if ' + T + ' < ' + Tmin + ' or ' + T + ' > ' + Tmax + ':\n')
+        f.write('        raise RuntimeError("' + T +' is not within the valid range")\n')
+        f.write('    for i in range(' + T + '):\n')
 
         I = input('What variable(s) should hold the input(s)? [I]: ') or "I"
         if I.find(',') != -1:
-            f.write('    ' + I + ' = input().split()\n')
+            f.write('        ' + I + ' = input().split()\n')
         else:
-            f.write('    ' + I + ' = input()\n')
+            f.write('        ' + I + ' = input()\n')
             
         f.write('    r = ' + machineName + '(' + I + ')\n')
         f.write('    print("Case #" + str(i + 1) + ": " + r)\n')
@@ -57,7 +57,7 @@ def main():
         f.write('    pass\n')
         f.write('\n')
         
-        f.write('if __name__=="__main__"\n')
+        f.write('if __name__=="__main__":\n')
         f.write('    main()\n')
     return
 

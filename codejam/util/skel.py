@@ -44,8 +44,18 @@ def main():
         f.write('    for i in range(' + T + '):\n')
 
         I = input('What variable(s) should hold the input(s)? [I]: ') or "I"
-        if I.find(',') != -1:
+        P = input('What types should they be stored as? [str]: ') or "str"
+        lI = len(I.split(','))
+        lP = len(P.split(','))
+
+        if lI > 1 and lP > 1:
+            f.write('        ' + I + ' = map(lambda x,y:x(y), (' + P + '), input().split()\n')
+        elif lI > 1 and P != "str":
+            f.write('        ' + I + ' = map(' + P + ', input().split())\n')
+        elif lI > 1 and P == "str":
             f.write('        ' + I + ' = input().split()\n')
+        elif lI == 1 and P != "str":
+            f.write('        ' + I + ' = ' + P + '(input())\n')
         else:
             f.write('        ' + I + ' = input()\n')
             

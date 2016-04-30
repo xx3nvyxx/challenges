@@ -59,8 +59,8 @@ def main():
         else:
             f.write('        ' + I + ' = input()\n')
             
-        f.write('    r = ' + machineName + '(' + I + ')\n')
-        f.write('    print("Case #" + str(i + 1) + ": " + r)\n')
+        f.write('        r = ' + machineName + '(' + I + ')\n')
+        f.write('        print("Case #" + str(i + 1) + ": " + r)\n')
         f.write('\n')
 
         f.write('def ' + machineName + '(' + I + '):\n')

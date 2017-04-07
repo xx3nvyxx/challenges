@@ -21,7 +21,7 @@ def ShoppingPlan(num_items,num_stores,price_of_gas):
     #python3: x_pos,y_pos,*items = input().split()
     store = input().split()
     stores.append( [(int(store[0]),int(store[1])),store[2:]] )
-  return "{:.6f}".format(go((0,0), stores, items, price_of_gas))
+  return "{:.7f}".format(go((0,0), stores, items, price_of_gas))
 
 def go(start, stores, items, price_of_gas):
   if len(items) == 0:

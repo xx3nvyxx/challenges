@@ -21,33 +21,37 @@ def ShoppingPlan(num_items,num_stores,price_of_gas):
     #python3: x_pos,y_pos,*items = input().split()
     store = input().split()
     stores.append( [(int(store[0]),int(store[1])),store[2:]] )
-  return "{:.7f}".format(go((0,0), stores, items, price_of_gas))
+  return "{:.7f}".format(go((0,0), stores, items, price_of_gas, 0))
 
-def go(start, stores, items, price_of_gas):
+def go(start, stores, items, price_of_gas, perishable):
+  gas_home = price_of_gas * hypot(0 - start[0], 0 - start[1])
   if len(items) == 0:
-    return price_of_gas * hypot(0 - start[0], 0 - start[1])
-   
-  costs = list()
+    return gas_home 
+  if start == (0,0):
+    perishable = 0
   
+  costs = list()
+ 
+  if perishable == 1:
+    costs.append(gas_home + go((0,0), stores, items, price_of_gas, 0))
+    filtered_stores = [x for x in stores if x[0] == start]
+  else:
+    filtered_stores = stores
+
   for i in range(len(items)):
+    p = perishable
     if items[i][-1] == '!':
+      p = 1
       item = items[i][:-1]
     else:
       item = items[i]
 
-    for j in range(len(stores)):
-      filtered_items = [x for x in stores[j][1] if item in x]
+    for j in range(len(filtered_stores)):
+      filtered_items = [x for x in filtered_stores[j][1] if item in x]
       if len(filtered_items) == 1:
         cost = int(filtered_items[0].split(":")[1])
-        #print("cost=",cost)
-        gas_here = price_of_gas * hypot(start[0] - stores[j][0][0], start[1] - stores[j][0][1])
-        #print("here=",gas_here)
-        if items[i][-1] == '!':
-          gas_home = price_of_gas * hypot(0 - stores[j][0][0], 0 - stores[j][0][1])
-          #print("home=",gas_home)
-          costs.append( cost + gas_here + gas_home + go((0,0), stores, [x for x in items if item not in x], price_of_gas))
-        else:
-          costs.append( cost + gas_here + go(stores[j][0], stores, [x for x in items if item not in x], price_of_gas))
+        gas_here = price_of_gas * hypot(start[0] - filtered_stores[j][0][0], start[1] - filtered_stores[j][0][1])
+        costs.append( cost + gas_here + go(filtered_stores[j][0], stores, [x for x in items if item not in x], price_of_gas, p))
   return min(costs)
 
 

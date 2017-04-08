@@ -14,13 +14,17 @@ def main():
         print("Case #" + str(i + 1) + ": " + str(r[0]) + " " + str(r[1]))
 
 def BathroomStalls(N,K):
-    openGroups = [N]
-    for i in range(K):
-      openGroups.sort()
-      s = openGroups.pop() - 1
-      r = [s//2+s%2, s//2]
-      openGroups.extend(r)
-    return r
+  openGroups = {N: 1}
+  while K > 0:
+    s = sorted(openGroups.keys(), reverse=True)[0]
+    m = openGroups[s]
+    del openGroups[s]
+    s = s - 1
+    r = [s//2+s%2, s//2]
+    openGroups[r[0]] = openGroups.setdefault(r[0], 0) + m
+    openGroups[r[1]] = openGroups.setdefault(r[1], 0) + m
+    K = K - m
+  return r
 
 
 if __name__=="__main__":

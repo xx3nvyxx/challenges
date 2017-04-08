@@ -31,6 +31,7 @@ def main():
         f.write('#!/user/bin/env python\n')
         f.write('"""Google Code Jam ' + year + ': Problem ' + lttr + '. ' + name + '"""\n')
         f.write('\n')
+        f.write('from __future__ import print_function\n')
         f.write('from builtins import input\n')
         f.write('\n')
         f.write('def main():\n')

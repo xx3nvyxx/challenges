@@ -50,7 +50,7 @@ def main():
         lP = len(P.split(','))
 
         if lI > 1 and lP > 1:
-            f.write('        ' + I + ' = map(lambda x,y:x(y), (' + P + '), input().split()\n')
+            f.write('        ' + I + ' = map(lambda x,y:x(y), (' + P + '), input().split())\n')
         elif lI > 1 and P != "str":
             f.write('        ' + I + ' = map(' + P + ', input().split())\n')
         elif lI > 1 and P == "str":

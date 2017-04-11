@@ -17,13 +17,16 @@ def main():
 def ShoppingPlan(num_items,num_stores,price_of_gas):
   items = input().split()
   stores = list()
+  solved = {}
   for i in range(num_stores):
     #python3: x_pos,y_pos,*items = input().split()
     store = input().split()
     stores.append( [(int(store[0]),int(store[1])),store[2:]] )
-  return "{:.7f}".format(go((0,0), stores, items, price_of_gas, 0))
+  return "{:.7f}".format(go((0,0), stores, items, price_of_gas, 0, solved))
 
-def go(start, stores, items, price_of_gas, perishable):
+def go(start, stores, items, price_of_gas, perishable, solved):
+  if (start, str(sorted(items)), perishable) in solved:
+    return solved[(start, str(sorted(items)), perishable)]
   gas_home = price_of_gas * hypot(0 - start[0], 0 - start[1])
   if len(items) == 0:
     return gas_home 
@@ -33,7 +36,7 @@ def go(start, stores, items, price_of_gas, perishable):
   costs = list()
  
   if perishable == 1:
-    costs.append(gas_home + go((0,0), stores, items, price_of_gas, 0))
+    costs.append(gas_home + go((0,0), stores, items, price_of_gas, 0, solved))
     filtered_stores = [x for x in stores if x[0] == start]
   else:
     filtered_stores = stores
@@ -51,7 +54,8 @@ def go(start, stores, items, price_of_gas, perishable):
       if len(filtered_items) == 1:
         cost = int(filtered_items[0].split(":")[1])
         gas_here = price_of_gas * hypot(start[0] - filtered_stores[j][0][0], start[1] - filtered_stores[j][0][1])
-        costs.append( cost + gas_here + go(filtered_stores[j][0], stores, [x for x in items if item not in x], price_of_gas, p))
+        costs.append( cost + gas_here + go(filtered_stores[j][0], stores, [x for x in items if item not in x], price_of_gas, p, solved))
+  solved[(start,str(sorted(items)),perishable)] = min(costs)
   return min(costs)
 
 

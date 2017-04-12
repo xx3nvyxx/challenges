@@ -14,7 +14,7 @@ def main():
         keyTimes = set()
         AB = []
         BA = []
-        for j in range(NA):
+        for j in range(NA+NB):
             times = input().split()
             Dh,Dm = map(int, times[0].split(':'))
             Ah,Am = map(int, times[1].split(':'))
@@ -22,16 +22,10 @@ def main():
             Am = (Am + T) % 60
             keyTimes.add((Dh,Dm))
             keyTimes.add((Ah,Am))
-            AB.append(((Dh,Dm),(Ah,Am)))
-        for j in range(NB):
-            times = input().split()
-            Dh,Dm = map(int, times[0].split(':'))
-            Ah,Am = map(int, times[1].split(':'))
-            Ah = Ah + ((Am + T) // 60)
-            Am = (Am + T) % 60
-            keyTimes.add((Dh,Dm))
-            keyTimes.add((Ah,Am))
-            BA.append(((Dh,Dm),(Ah,Am)))
+            if j < NA:
+                AB.append(((Dh,Dm),(Ah,Am)))
+            else:
+                BA.append(((Dh,Dm),(Ah,Am)))
         r = TrainTimetable(keyTimes,AB, BA)
         print("Case #" + str(i + 1) + ": " + r)
 

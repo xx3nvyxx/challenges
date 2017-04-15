@@ -16,28 +16,32 @@ def main():
 def PlaytheDragon(Hd,Ad,Hk,Ak,B,D):
     H = Hd
     queue = []
-    state = [0,Hd,Ad,Hk,Ak]
+    state = (0,Hd,Ad,Hk,Ak,())
     queue.append(state)
-    seen = set()
+    seen = dict()
     while len(queue) > 0:
-        turn,Hd,Ad,Hk,Ak = queue.pop(0)
-        tag = str(Hd) + " " + str(Ad) + " " + str(Hk) + " " + str(Ak)
+        turn,Hd,Ad,Hk,Ak,pTag = queue.pop(0)
+        tag = (Hd,Ad,Hk,Ak)
         if tag in seen:
             continue
         else:
-            seen.add(tag)
+            seen[tag] = pTag
         turn += 1
         if Ad >= Hk:
+            while tag != ():
+                #print(tag)
+                tag = seen[tag]
             return str(turn)
         if Ak < Hd:
-            attack = (turn,Hd-Ak,Ad,Hk-Ad,Ak)
+            attack = (turn,Hd-Ak,Ad,Hk-Ad,Ak,tag)
             queue.append(attack)
-            buff   = (turn,Hd-Ak,Ad+B,Hk,Ak)
+            buff   = (turn,Hd-Ak,Ad+B,Hk,Ak,tag)
             queue.append(buff)
-            debuff = (turn,Hd-(Ak-D),Ad,Hk,max(Ak-D,0))
+        if (Ak-D) < Hd:
+            debuff = (turn,Hd-max(Ak-D,0),Ad,Hk,max(Ak-D,0),tag)
             queue.append(debuff)
         if Ak < H:
-            heal = (turn,H-Ak,Ad,Hk,Ak)
+            heal = (turn,H-Ak,Ad,Hk,Ak,tag)
             queue.append(heal)
     return "IMPOSSIBLE"
 

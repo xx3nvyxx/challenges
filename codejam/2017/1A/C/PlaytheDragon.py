@@ -34,7 +34,7 @@ def PlaytheDragon(Hd,Ad,Hk,Ak,B,D):
             queue.append(attack)
             buff   = (turn,Hd-Ak,Ad+B,Hk,Ak)
             queue.append(buff)
-            debuff = (turn,Hd-Ak,Ad,Hk,max(Ak-D,0))
+            debuff = (turn,Hd-(Ak-D),Ad,Hk,max(Ak-D,0))
             queue.append(debuff)
         if Ak < H:
             heal = (turn,H-Ak,Ad,Hk,Ak)

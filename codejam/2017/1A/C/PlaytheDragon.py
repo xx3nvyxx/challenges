@@ -39,7 +39,7 @@ def PlaytheDragon(Hd,Ad,Hk,Ak,B,D):
         if Ak < H:
             heal = (turn,H-Ak,Ad,Hk,Ak)
             queue.append(heal)
-    return "Impossible"
+    return "IMPOSSIBLE"
 
 if __name__=="__main__":
     main()

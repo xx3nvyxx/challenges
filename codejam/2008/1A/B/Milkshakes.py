@@ -46,9 +46,10 @@ def Milkshakes(N,customers):
                 curcust = customers[key]
                 for i in range(len(curCust)):
                     prefs[curCust[i]] = prefs.get(curCust[i], 0) + 1
-            k = sorted(prefs, key=lambda x:prefs[x], reverse=True)
-            flavor = k[0][0]
-            malted = k[0][1]
+            p = sorted(prefs, key=lambda x:prefs[x], reverse=True)
+            p.sort(key=lambda x: x[1])
+            flavor = p[0][0]
+            malted = p[0][1]
             if r[flavor] == None:
                 r[flavor] = malted
                 for key in customers.keys():

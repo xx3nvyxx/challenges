@@ -13,22 +13,17 @@ def main():
         print("Case #" + str(i + 1) + ": " + r)
 
 def Mousetrap(K, d):
-    found = set()
-    i = 0
+    a = range(1,K+1)
     c = 1
-    n = 1
     order = dict()
-    while not (set(d) <= found):
-        i = (i % K) + 1
-        #print( i, c, n, r, d, found)
-        if i in found:
-            continue
-        if n == c:
-            found.add(i)
-            order[i] = c
-            c += 1
-            n = 0
-        n += 1
+    while not (set(d) <= set(order.keys())):
+        order[a.pop(0)] = c
+        if len(order) == K:
+            break
+        offset = c % len(a)
+        c += 1
+        a = a[offset:]+a[:offset]
+        #print(a)
     r = []
     for i in range(len(d)):
         r.append(str(order[d[i]]))
